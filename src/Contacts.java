@@ -53,11 +53,14 @@ public class Contacts {
             iox.printStackTrace();
         }
 
-        List<String> contacts = Files.readAllLines(Paths.get(directory, filename));
-
         boolean runLoop = true;
         do {
-            System.out.println("1. View contacts.\n" +
+
+        List<String> contacts = Files.readAllLines(Paths.get(directory, filename));
+
+//        boolean runLoop = true;
+//        do {
+            System.out.println("\n1. View contacts.\n" +
                     "2. Add a new contact.\n" +
                     "3. Search a contact by name.\n" +
                     "4. Delete an existing contact.\n" +
@@ -95,7 +98,7 @@ public class Contacts {
                     }
                     break;
                 case 4:
-                    System.out.println("Select name to delete:");
+                    System.out.println("Select contact name to delete:");
                     String deleteName = scanner.next();
                     List<String> deleteContact = new ArrayList<>();
                     for (String delete : contacts) {
@@ -105,6 +108,7 @@ public class Contacts {
                             deleteContact.add(delete);
                         }
                     } Files.write(dataFile, deleteContact);
+                    break;
 //                Files.write(dataFile, deleteContact, StandardOpenOption.APPEND);
                 case 5:
                     System.out.println("Goodbye!");
