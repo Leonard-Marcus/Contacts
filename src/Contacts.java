@@ -49,6 +49,9 @@ public class Contacts {
 
         List<String> contacts = Files.readAllLines(dataFile);
 
+
+
+
         System.out.println("1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -61,6 +64,7 @@ public class Contacts {
         switch (userInt) {
             case 1:
                 System.out.println(contacts);
+                break;
             case 2:
                 System.out.println("Enter a name:");
                 String name = scanner.next();
@@ -69,16 +73,27 @@ public class Contacts {
                 List<String> nameList = new ArrayList<>();
                 nameList.add(name + ' ' + number);
                 Files.write(dataFile, nameList, StandardOpenOption.APPEND);
+            case 3:
+
             case 4:
                 System.out.println("Select name to delete:");
                 String deleteName = scanner.next();
                 List<String> deleteContact = new ArrayList<>();
-                deleteContact.remove(deleteName);
-                Files.write(dataFile, deleteContact, StandardOpenOption.APPEND);
+                for (String delete: contacts){
+                    if(delete.contains(deleteName)){
+                        continue;
+                    } else {
+                        deleteContact.add(delete);
+                    }
+
+                }
+                Files.write(dataFile, deleteContact);
+//                Files.write(dataFile, deleteContact, StandardOpenOption.APPEND);
             case 5:
                 System.out.println("Goodbye!");
-                break;
+//                break;
         }
+        System.exit(0);
     }
 }
 
