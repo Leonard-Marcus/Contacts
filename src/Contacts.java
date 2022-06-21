@@ -8,7 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Contacts {
+
+
     public static void main(String[] args) throws IOException {
+
+
+
 
 
         String directory = "src";
@@ -33,7 +38,10 @@ public class Contacts {
 
             List<String> personText = new ArrayList<>();
             personText.add("Bob 1234567890");
-            personText.add("Bob 1234567890");
+            personText.add("Gary 3247789021");
+            personText.add("Lauren 2213356773");
+            personText.add("Eric 4439087127");
+
 
 
 //            if (Files.exists(dataFile)) {
@@ -47,7 +55,7 @@ public class Contacts {
             iox.printStackTrace();
         }
 
-        List<String> contacts = Files.readAllLines(dataFile);
+        List<String> contacts = Files.readAllLines(Paths.get(directory, filename));
 
 
 
@@ -63,7 +71,9 @@ public class Contacts {
 
         switch (userInt) {
             case 1:
-                System.out.println(contacts);
+                String[] parts = contacts.split (" ");
+                String part1 = parts[0];
+                System.out.printf("%-20s | %-20s\n", contacts);
                 break;
             case 2:
                 System.out.println("Enter a name:");
@@ -73,8 +83,18 @@ public class Contacts {
                 List<String> nameList = new ArrayList<>();
                 nameList.add(name + ' ' + number);
                 Files.write(dataFile, nameList, StandardOpenOption.APPEND);
+                break;
             case 3:
-
+                System.out.println("Enter contact name to search:");
+                String searchName = scanner.next();
+//                List<String> searchContact = new ArrayList<>();
+                for (String search: contacts){
+                    if (search.contains(searchName)){
+                        System.out.println(search);
+                    }
+//
+                }
+                    break;
             case 4:
                 System.out.println("Select name to delete:");
                 String deleteName = scanner.next();
