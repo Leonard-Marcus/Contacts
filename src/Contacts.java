@@ -13,9 +13,6 @@ public class Contacts {
     public static void main(String[] args) throws IOException {
 
 
-
-
-
         String directory = "src";
         String filename = "contacts.txt";
 
@@ -37,11 +34,12 @@ public class Contacts {
             }
 
             List<String> personText = new ArrayList<>();
-            personText.add("Bob 1234567890");
-            personText.add("Gary 3247789021");
-            personText.add("Lauren 2213356773");
-            personText.add("Eric 4439087127");
-
+            personText.add("Name  |  Phone number");
+            personText.add("-------------------");
+            personText.add("Bob | 1234567890");
+            personText.add("Gary | 3247789021");
+            personText.add("Lauren | 2213356773");
+            personText.add("Eric | 4439087127");
 
 
 //            if (Files.exists(dataFile)) {
@@ -57,63 +55,66 @@ public class Contacts {
 
         List<String> contacts = Files.readAllLines(Paths.get(directory, filename));
 
+        boolean runLoop = true;
+        do {
+            System.out.println("1. View contacts.\n" +
+                    "2. Add a new contact.\n" +
+                    "3. Search a contact by name.\n" +
+                    "4. Delete an existing contact.\n" +
+                    "5. Exit.\n" +
+                    "Enter an option (1, 2, 3, 4 or 5):");
+            Scanner scanner = new Scanner(System.in);
+            int userInt = scanner.nextInt();
 
-
-
-        System.out.println("1. View contacts.\n" +
-                "2. Add a new contact.\n" +
-                "3. Search a contact by name.\n" +
-                "4. Delete an existing contact.\n" +
-                "5. Exit.\n" +
-                "Enter an option (1, 2, 3, 4 or 5):");
-        Scanner scanner = new Scanner(System.in);
-        int userInt = scanner.nextInt();
-
-        switch (userInt) {
-            case 1:
-                String[] parts = contacts.split (" ");
-                String part1 = parts[0];
-                System.out.printf("%-20s | %-20s\n", contacts);
-                break;
-            case 2:
-                System.out.println("Enter a name:");
-                String name = scanner.next();
-                System.out.println("Enter a phone number:");
-                String number = scanner.next();
-                List<String> nameList = new ArrayList<>();
-                nameList.add(name + ' ' + number);
-                Files.write(dataFile, nameList, StandardOpenOption.APPEND);
-                break;
-            case 3:
-                System.out.println("Enter contact name to search:");
-                String searchName = scanner.next();
-//                List<String> searchContact = new ArrayList<>();
-                for (String search: contacts){
-                    if (search.contains(searchName)){
-                        System.out.println(search);
+            switch (userInt) {
+                case 1:
+//                String[] parts = contacts.split(" ");
+//                String part = parts[0];
+                    for (String contact : contacts) {
+                        System.out.println(contact);
                     }
-//
-                }
                     break;
-            case 4:
-                System.out.println("Select name to delete:");
-                String deleteName = scanner.next();
-                List<String> deleteContact = new ArrayList<>();
-                for (String delete: contacts){
-                    if(delete.contains(deleteName)){
-                        continue;
-                    } else {
-                        deleteContact.add(delete);
+                case 2:
+                    System.out.println("Enter a name:");
+                    String name = scanner.next();
+                    System.out.println("Enter a phone number:");
+                    String number = scanner.next();
+                    List<String> nameList = new ArrayList<>();
+                    nameList.add(name + " | " + number);
+                    Files.write(dataFile, nameList, StandardOpenOption.APPEND);
+                    break;
+                case 3:
+                    System.out.println("Enter contact name to search:");
+                    String searchName = scanner.next();
+//                List<String> searchContact = new ArrayList<>();
+                    for (String search : contacts) {
+                        if (search.contains(searchName)) {
+                            System.out.println(search);
+                        }
+//
                     }
-
-                }
-                Files.write(dataFile, deleteContact);
+                    break;
+                case 4:
+                    System.out.println("Select name to delete:");
+                    String deleteName = scanner.next();
+                    List<String> deleteContact = new ArrayList<>();
+                    for (String delete : contacts) {
+                        if (delete.contains(deleteName)) {
+                            continue;
+                        } else {
+                            deleteContact.add(delete);
+                        }
+                    } Files.write(dataFile, deleteContact);
 //                Files.write(dataFile, deleteContact, StandardOpenOption.APPEND);
-            case 5:
-                System.out.println("Goodbye!");
+                case 5:
+                    System.out.println("Goodbye!");
 //                break;
-        }
-        System.exit(0);
+                default: runLoop = false;
+            }
+//            System.exit(0);
+
+        } while (runLoop);
+
     }
 }
 
